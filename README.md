@@ -5,7 +5,7 @@ The API's are developed using Go and MongoDB is used for storage.
 
 Localhost port 8080 has been used.
 
-This API system has following functions:
+This API system has following controller functions:
 
 1) Create a User
 
@@ -36,6 +36,6 @@ This API system has following functions:
 
      For getting the post using id, the url is http://localhost:8080/posts/<post_id>
 
-5) List of all posts of a user --> not working (fetching empty output)
+5) List of all posts of a user --> Not complete output
 
       For getting the list of all the posts by a user, url assigned is http://localhost:8080/posts/user/<user_id>
