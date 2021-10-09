@@ -26,7 +26,7 @@ This API system has following controller functions:
     For creating a post, the url is http://localhost:8080/posts
     
     The post model has following attributes:
-        -User ID (To know which user has posted the image)
+        -User ID (To know which user has posted the image0
         -Post ID
         -Caption
         -Image URL
