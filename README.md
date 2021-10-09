@@ -12,6 +12,7 @@ This API system has following controller functions:
     For creating the user, the url is http://localhost:8080/user
 
     The User model has following attributes:
+          
           -User ID
           -Name
           -Email ID
@@ -26,6 +27,7 @@ This API system has following controller functions:
     For creating a post, the url is http://localhost:8080/posts
     
     The post model has following attributes:
+        
         -User ID (To know which user has posted the image0
         -Post ID
         -Caption
