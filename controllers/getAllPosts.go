@@ -18,71 +18,39 @@ type UserpostsController struct {
 }
 
 func NewUserpostsController(s3 *mgo.Session) *UserpostsController {
-	return &UserpostsController{s3} //RETURNS ADDRESS OF USER CONTROLLER
+	return &UserpostsController{s3}
 }
 
-func (upc UserpostsController) GetAllPosts(w3 http.ResponseWriter, r3 *http.Request, p3 routing.Params) {
-	id := p3.ByName("id")
+//FUNCTION TO POST ALL POSTS OF A USER -- NOT GETTING COMPLETE OUTPUT
+
+func (upc UserpostsController) GetAllPosts(w http.ResponseWriter, r *http.Request, p routing.Params) {
+	id := p.ByName("id")
 
 	if !bson.IsObjectIdHex(id) {
-		w3.WriteHeader(http.StatusNotFound)
+		w.WriteHeader(404)
 	}
-
-	oid := bson.ObjectIdHex(id)
 
 	po := models.Post{}
 	u := models.User{}
 
-	if err := upc.session.DB("mongo-golang").C("posts").FindId(oid).One(&po); err != nil {
-		w3.WriteHeader(404)
-		return
-	}
-
 	count, err := upc.session.DB("mongo-golang").C("posts").Count()
 
 	if err != nil {
-		fmt.Print(err)
+		fmt.Println(err)
 	}
-
-	// var items []string
 
 	for i := 0; i < count; i++ {
-		items := upc.session.DB("mongo-golang").C("posts").Find(po.UserId == u.Id)
-		pj, err := json.Marshal(items)
+		if upc.session.DB("mongo-golang").C("posts").Find(po.UserId == u.Id) != nil {
 
-		if err != nil {
-			fmt.Print(err)
+			pj, err := json.Marshal(po)
+
+			if err != nil {
+				fmt.Println(err)
+			}
+
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(201)
+			fmt.Fprintf(w, "%s\n", pj)
 		}
-
-		w3.Header().Set("Content-Type", "application/json")
-		w3.WriteHeader(http.StatusOK)
-		fmt.Fprintf(w3, "%s\n", pj)
 	}
-
 }
-
-// func (upc UserpostsController) Pagination(page int) ([]map[string]interface{}) {
-
-// 	const (
-// 		itemsPerPage = 10
-// 	)
-
-// 	var data []map[string]interface{}
-
-// 	count, err := upc.session.DB("mongo-golang").C("posts").Count()
-
-// 	if err != nil {
-// 		fmt.Print(err)
-// 	}
-
-// 	start := (page - 1) * itemsPerPage
-// 	stop := start + itemsPerPage
-
-// 	if start > count {
-// 		return nil
-// 	}
-
-// 	if stop > len(data) {
-// 		stop = len(data)
-// 	}
-// }

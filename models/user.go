@@ -1,3 +1,5 @@
+//CONTAINS MODEL FOR USER
+
 package models
 
 import "gopkg.in/mgo.v2/bson"
@@ -6,7 +8,7 @@ import "gopkg.in/mgo.v2/bson"
 
 //MODEL OF USER -- EVERY USER IN PROJECT WILL HAVE THESE 4 ATTRIBUTES
 type User struct {
-	Id       bson.ObjectId `json:"id" bson:"_id"`
+	Id       bson.ObjectId `json:"id" bson:"_id,omitempty"`
 	Name     string        `json:"name" bson:"name"`
 	Email    string        `json:"email" bson:"email"`
 	Password string        `json:"password" bson:"password"`

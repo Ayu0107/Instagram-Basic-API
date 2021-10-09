@@ -39,7 +39,7 @@ func (pc PostController) CreatePost(w2 http.ResponseWriter, r2 *http.Request, _ 
 	}
 
 	w2.Header().Set("Content-Type", "application/json")
-	w2.WriteHeader(http.StatusCreated)
+	w2.WriteHeader(201)
 	fmt.Fprintf(w2, "%s\n", pj)
 }
 
@@ -49,7 +49,7 @@ func (pc PostController) GetPost(w2 http.ResponseWriter, r2 *http.Request, p2 ro
 	id := p2.ByName("id")
 
 	if !bson.IsObjectIdHex(id) {
-		w2.WriteHeader(http.StatusNotFound)
+		w2.WriteHeader(404)
 	}
 
 	oid := bson.ObjectIdHex(id)
@@ -68,6 +68,6 @@ func (pc PostController) GetPost(w2 http.ResponseWriter, r2 *http.Request, p2 ro
 	}
 
 	w2.Header().Set("Content-Type", "application/json")
-	w2.WriteHeader(http.StatusOK)
+	w2.WriteHeader(201)
 	fmt.Fprintf(w2, "%s\n", pj)
 }
